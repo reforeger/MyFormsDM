@@ -106,6 +106,7 @@ namespace MyFormsDM
             }
         }
 
+
         private void RadioButton_Changed(object sender, EventArgs e)
         {
             if (r1.Checked)
