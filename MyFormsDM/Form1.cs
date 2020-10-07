@@ -137,15 +137,16 @@ namespace MyFormsDM
                 tabControl.Location = new Point(500, 500);
                 tabControl.Size = new Size(100, 100);
                 page1 = new TabPage("Esimene");
-                page1.ImageIndex = "cic.png";
+                page1.ImageIndex = 1;
                 page2 = new TabPage("Teine");
-                page2.ImageIndex = ; 
+                page2.ImageIndex = 2; 
                 page3 = new TabPage("Kolmas");
-                page3.ImageIndex = ;
+
 
                 tabControl.Controls.Add(page1);
                 tabControl.Controls.Add(page2);
                 tabControl.Controls.Add(page3);
+                tabControl.SelectedIndex = 2;
                 this.Controls.Add(tabControl);
             }
             else if(e.Node.Text == "MessageBox")
@@ -161,6 +162,10 @@ namespace MyFormsDM
                     {
                         lbl.Text = text;
                         Controls.Add(lbl);
+                    }
+                    else if(tabControl.SelectedIndex == 2)
+                    {
+                        page1.BackColor = Color.Red;
                     }
                 }
 
