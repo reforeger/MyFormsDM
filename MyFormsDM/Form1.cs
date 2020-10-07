@@ -117,7 +117,7 @@ namespace MyFormsDM
                 txt_box = new TextBox();
                 txt_box.Multiline = true;
                 txt_box.Text = text;
-                txt_box.Location = new Point(300, 200);
+                txt_box.Location = new Point(50, 300);
                 txt_box.Width = 200;
                 txt_box.Height = 100;
             }
@@ -134,7 +134,7 @@ namespace MyFormsDM
             else if(e.Node.Text == "kaart - TabControl")
             {
                 tabControl = new TabControl();
-                tabControl.Location = new Point(500, 500);
+                tabControl.Location = new Point(50, 400);
                 tabControl.Size = new Size(100, 100);
                 page1 = new TabPage("Esimene");
                 page1.ImageIndex = 1;
