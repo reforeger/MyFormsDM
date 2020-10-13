@@ -23,11 +23,12 @@ namespace MyFormsDM
         PictureBox picture;
         TabControl tabControl;
         TabPage page1, page2, page3;
+        ListBox lbox;
         public Form1()
         {
-            this.Height = 500;
-            this.Width = 600;
-            this.Text = "Vorm elementiga";
+            Height = 500;
+            Width = 600;
+            Text = "Vorm elementiga";
             tree = new TreeView();
             tree.Dock = DockStyle.Right;
             tree.AfterSelect += Tree_AfterSelect;
@@ -58,8 +59,12 @@ namespace MyFormsDM
             tn.Nodes.Add(new TreeNode("Pildicast - PictureBox"));
             tn.Nodes.Add(new TreeNode("kaart - TabControl"));
             tn.Nodes.Add(new TreeNode("MessageBox"));
+            tn.Nodes.Add(new TreeNode("Listbox"));
+            tn.Nodes.Add(new TreeNode("dataGridView"));
+            tn.Nodes.Add(new TreeNode("Menu"));
+
             tree.Nodes.Add(tn);
-            this.Controls.Add(tree);
+            Controls.Add(tree);
             
 
         }
@@ -68,23 +73,23 @@ namespace MyFormsDM
         {
             if (e.Node.Text == "Nupp - Button")
             {
-                this.Controls.Add(btn);
+                Controls.Add(btn);
 
             }
             else if (e.Node.Text == "silt - Label")
             {
-                this.Controls.Add(lbl);
+                Controls.Add(lbl);
             }
             else if (e.Node.Text == "Märkeruut - CheckBox")
             {
                 box_btn = new CheckBox();
                 box_btn.Text = "Näita Button";
                 box_btn.Location = new Point(230, 30);
-                this.Controls.Add(box_btn);
+                Controls.Add(box_btn);
                 box_lbl = new CheckBox();
                 box_lbl.Text = "Näita Label";
                 box_lbl.Location = new Point(230, 50);
-                this.Controls.Add(box_lbl);
+                Controls.Add(box_lbl);
                 box_lbl.CheckedChanged += Box_lbl_CheckedChanged;
                 box_btn.CheckedChanged += Box_btn_CheckedChanged;
             }
@@ -99,8 +104,8 @@ namespace MyFormsDM
                 r2.Location = new Point(350, 50);
                 r2.CheckedChanged += new EventHandler(RadioButton_Changed);
 
-                this.Controls.Add(r1);
-                this.Controls.Add(r2);
+                Controls.Add(r1);
+                Controls.Add(r2);
 
             }
             else if (e.Node.Text == "Tekstkast - TextBox")
@@ -117,29 +122,29 @@ namespace MyFormsDM
                 txt_box = new TextBox();
                 txt_box.Multiline = true;
                 txt_box.Text = text;
-                txt_box.Location = new Point(50, 300);
+                txt_box.Location = new Point(50, 325);
                 txt_box.Width = 200;
                 txt_box.Height = 100;
             }
-            else if(e.Node.Text == "Pildicast - PictureBox")
+            else if (e.Node.Text == "Pildicast - PictureBox")
             {
                 picture = new PictureBox();
-                picture.Image = new Bitmap("cic.png");
+                picture.Image = new Bitmap("lo/bic.png");
                 picture.Location = new Point(300, 450);
-                picture.Size = new Size (100, 100);
+                picture.Size = new Size(100, 100);
                 picture.SizeMode = PictureBoxSizeMode.Zoom;
                 picture.BorderStyle = BorderStyle.Fixed3D;
-                this.Controls.Add(picture);
+                Controls.Add(picture);
             }
-            else if(e.Node.Text == "kaart - TabControl")
+            else if (e.Node.Text == "kaart - TabControl")
             {
                 tabControl = new TabControl();
-                tabControl.Location = new Point(50, 400);
+                tabControl.Location = new Point(50, 300);
                 tabControl.Size = new Size(100, 100);
                 page1 = new TabPage("Esimene");
                 page1.ImageIndex = 1;
                 page2 = new TabPage("Teine");
-                page2.ImageIndex = 2; 
+                page2.ImageIndex = 2;
                 page3 = new TabPage("Kolmas");
 
 
@@ -147,12 +152,12 @@ namespace MyFormsDM
                 tabControl.Controls.Add(page2);
                 tabControl.Controls.Add(page3);
                 tabControl.SelectedIndex = 2;
-                this.Controls.Add(tabControl);
+                Controls.Add(tabControl);
             }
-            else if(e.Node.Text == "MessageBox")
+            else if (e.Node.Text == "MessageBox")
             {
                 MessageBox.Show("MessageBox", "Kõige lihtsam aken");
-                var answer=MessageBox.Show("Tahad inpudBoxi näha?", "Aken koos nupudega" ,MessageBoxButtons.YesNo);
+                var answer = MessageBox.Show("Tahad inpudBoxi näha?", "Aken koos nupudega", MessageBoxButtons.YesNo);
                 if (answer == DialogResult.Yes)
                 {
 
@@ -163,12 +168,80 @@ namespace MyFormsDM
                         lbl.Text = text;
                         Controls.Add(lbl);
                     }
-                    else if(tabControl.SelectedIndex == 2)
+                    else if (tabControl.SelectedIndex == 2)
                     {
                         page1.BackColor = Color.Red;
                     }
                 }
 
+            }
+            else if (e.Node.Text == "Listbox")
+            {
+                lbox = new ListBox();
+                string[] colors_nimetused = new string[] { "Kollane", "Punane", "Roheline", "Sinine" };
+                foreach (var item in colors_nimetused)
+                {
+                    lbox.Items.Add(item);
+                }
+                lbox.Location = new Point(50, 225);
+                lbox.Width = colors_nimetused.Length * 25;
+                lbox.Height = colors_nimetused.Length * 15;
+                Controls.Add(lbox);
+            }
+            else if (e.Node.Text == "dataGridView")
+            {
+                DataSet dataSet = new DataSet("Näida");
+                dataSet.ReadXml("..//..//files1//XMLFile1.xml");
+                DataGridView dgv = new DataGridView();
+                dgv.Location = new Point(200, 225);
+                dgv.Width = 200;
+                dgv.Height = 200;
+                dgv.AutoGenerateColumns = true;
+                dgv.DataMember = "plant";
+                dgv.DataSource = dataSet;
+                Controls.Add(dgv);
+            }
+            else if (e.Node.Text == "Menu") 
+            {
+                MainMenu menu = new MainMenu();
+                MenuItem menuitem1 = new MenuItem("File");
+                menuitem1.MenuItems.Add("Exit", new EventHandler(menuitem1_Exit));
+                menuitem1.MenuItems.Add("Hide Tree", new EventHandler(menuitem1_Hide));
+                menuitem1.MenuItems.Add("Show Tree", new EventHandler(menuitem1_unHide));
+                menuitem1.MenuItems.Add("Change Colors", new EventHandler(menuitem1_Colors));
+                menu.MenuItems.Add(menuitem1);
+                Menu = menu;
+            }
+        }
+
+        private void menuitem1_Hide(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("Hide Tree?", "Küsimus", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                tree.Hide();
+            }
+        }
+
+        private void menuitem1_unHide(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Show Tree?", "Küsimus", MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                tree.Show();
+            }
+        }
+        private void menuitem1_Colors(object sender, EventArgs e)
+        {
+            if ()
+            {
+                tree.BackColor = Color.DarkCyan;
+            }
+        }
+
+        private void menuitem1_Exit(object sender, EventArgs e)
+        {
+           if (MessageBox.Show("Kas oled kindel", "Küsimus",MessageBoxButtons.YesNo)==DialogResult.Yes)
+            {
+                Dispose();
             }
         }
 
@@ -176,7 +249,7 @@ namespace MyFormsDM
         {
             if (box_lbl.Checked)
             {
-                this.Controls.Add(lbl);
+                Controls.Add(lbl);
             }
             else
             {
@@ -202,7 +275,7 @@ namespace MyFormsDM
         {
             if(box_btn.Checked)
             {
-                this.Controls.Add(btn);
+                Controls.Add(btn);
             }
             else
             {
